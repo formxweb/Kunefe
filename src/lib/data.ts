@@ -277,6 +277,8 @@ export const heroPost = "https://www.instagram.com/p/DVLvqo7iIEj/";
 export const site = {
   name: "Antephan Künefe",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://antephankunefe.com",
+  /** Önizleme yayınlarında arama motorlarının siteyi dizine eklememesi için */
+  noindex: process.env.NEXT_PUBLIC_NOINDEX === "1",
   email: "info@antephankunefe.com",
   instagram: "https://www.instagram.com/antephankunefe/",
   instagramHandle: "@antephankunefe",

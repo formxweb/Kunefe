@@ -6,6 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { JsonLd } from "@/components/JsonLd";
 import { ArrowRight, PinIcon } from "@/components/icons";
 import { getCategory, getProduct, products, site } from "@/lib/data";
+import { openGraph } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -20,11 +21,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = getProduct(slug);
   if (!p) return {};
   const c = getCategory(p.category);
+  const description = `${p.name}: ${p.description} Antephan Künefe şubelerinde.`;
   return {
     title: `${p.name} | ${c.label}`,
-    description: `${p.name}: ${p.description} Antephan Künefe şubelerinde.`,
+    description,
     alternates: { canonical: `/menu/${p.slug}/` },
-    openGraph: { images: [{ url: p.image, width: 430, height: 430, alt: p.name }] },
+    openGraph: openGraph(p.name, description, p.image),
   };
 }
 

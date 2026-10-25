@@ -26,6 +26,13 @@ npm start          # out/ klasörünü yerelde sunar
 
 - Alt dizinde yayın (ör. GitHub Pages): `NEXT_PUBLIC_BASE_PATH=/Kunefe npm run build`
 - Farklı alan adı: `NEXT_PUBLIC_SITE_URL=https://ornek.com npm run build` (kanonik adresler, sitemap ve paylaşım görselleri için)
+- Önizleme (dizine eklenmesin): `NEXT_PUBLIC_NOINDEX=1 npm run build`
+
+### Önizleme yayını
+
+Dala yapılan her gönderimde [`.github/workflows/pages.yml`](.github/workflows/pages.yml) siteyi derleyip GitHub Pages'e yükler: https://formxweb.github.io/Kunefe/
+
+Bu yayın `noindex` ile derlenir; arama motorları dizine eklemez. Gerçek alan adına taşırken `NEXT_PUBLIC_NOINDEX` değişkenini kaldırın.
 
 ## İçerik güncelleme
 

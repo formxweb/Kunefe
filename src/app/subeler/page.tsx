@@ -4,11 +4,15 @@ import { BranchExplorer } from "@/components/branches/BranchExplorer";
 import { Photo } from "@/components/Photo";
 import { JsonLd } from "@/components/JsonLd";
 import { branches, cityCount, site, visitFaq } from "@/lib/data";
+import { openGraph } from "@/lib/seo";
+
+const description = `Antephan Künefe’nin ${cityCount} şehirdeki ${branches.length} şubesi: adresler, telefonlar ve Google Haritalar yol tarifi.`;
 
 export const metadata: Metadata = {
   title: "Şubelerimiz",
-  description: `Antephan Künefe’nin ${cityCount} şehirdeki ${branches.length} şubesi: adresler, telefonlar ve Google Haritalar yol tarifi.`,
+  description,
   alternates: { canonical: "/subeler/" },
+  openGraph: openGraph("Şubelerimiz", description, "/images/branches/esenler.webp"),
 };
 
 export default function BranchesPage() {

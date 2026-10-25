@@ -20,6 +20,7 @@ import {
   site,
   telHref,
 } from "@/lib/data";
+import { openGraph } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -33,10 +34,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const b = getBranch(slug);
   if (!b) return {};
+  const description = `Antephan Künefe ${b.name} şubesi: ${fullAddress(b)}. Telefon: ${b.phone}. Yol tarifi ve harita.`;
   return {
     title: `${b.name} Şubesi`,
-    description: `Antephan Künefe ${b.name} şubesi: ${fullAddress(b)}. Telefon: ${b.phone}. Yol tarifi ve harita.`,
+    description,
     alternates: { canonical: `/subeler/${b.slug}/` },
+    openGraph: openGraph(`${b.name} Şubesi`, description, b.photo ? `/images/branches/${b.slug}.webp` : undefined),
   };
 }
 
@@ -102,7 +105,7 @@ export default async function BranchPage({ params }: { params: Promise<Params> }
             <div>
               <p className="eyebrow text-ember">{region.label}</p>
               <h1 id="sube-baslik" className="mt-4 leading-[0.9]">
-                <span className="block font-sans text-[1.15rem] font-bold uppercase tracking-[0.2em] text-pistachio">Antephan Künefe</span>
+                <span className="block font-sans text-[1.15rem] font-bold uppercase tracking-[0.2em] text-pistachio">Antephan Künefe</span>{" "}
                 <span className="mt-2 block text-[clamp(3.2rem,10vw,7rem)]">{b.name}</span>
               </h1>
             </div>
