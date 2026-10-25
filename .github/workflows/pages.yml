@@ -43,5 +43,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Pages kaynağı hâlâ "Deploy from a branch" ise klasik Jekyll yayını da çalışır;
+      # onun bitmesini bekleyip en son bu sürümü yayınla. Kaynak "GitHub Actions" olunca beklemez.
+      - name: Klasik Pages yayınını bekle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          type=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type || echo unknown)
+          echo "Pages build_type: $type"
+          if [ "$type" = "legacy" ]; then sleep 90; fi
       - id: deployment
         uses: actions/deploy-pages@v4
