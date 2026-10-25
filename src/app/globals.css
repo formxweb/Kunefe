@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f3ebdd;
+  --color-cream-deep: #e9dcc5;
+  --color-paper: #f9f4ea;
+  --color-choco: #3a2117;
+  --color-choco-deep: #261510;
+  --color-choco-mid: #5c3d2c;
+  --color-muted: #6b5242;
+  --color-line: #d8c6aa;
+  --color-pistachio: #4d6b25;
+  --color-pistachio-deep: #3a5119;
+  --color-pistachio-mid: #8aa74a;
+  --color-pistachio-soft: #c6d39c;
+  --color-pistachio-mist: #e3e5c6;
+  --color-ember: #9c4710;
+  --color-ember-bright: #c9601c;
+  --color-ember-soft: #eeb27d;
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-alegreya), "Trebuchet MS", system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7.5rem;
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-cream);
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-choco);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-pistachio-soft);
+    color: var(--color-choco-deep);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 40, "WONK" 0;
+    font-weight: 560;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .display-italic {
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+    font-weight: 480;
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 48rem) {
+    .shell { padding-inline: 2rem; }
+  }
+
+  /* Sivri kemer: şube kapılarındaki kemerden */
+  .arch {
+    clip-path: url(#arch-clip);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms var(--ease-soft);
+  }
+  .link-underline:hover { background-size: 0% 1px; background-position: 100% 100%; }
+
+  /* Fareyle üzerine gelince açılan açıklama; dokunmatik ekranda ve klavye odağında hep açık */
+  .reveal-desc {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 500ms var(--ease-soft), opacity 500ms var(--ease-soft), transform 500ms var(--ease-soft);
+  }
+  .reveal-desc > * { min-height: 0; overflow: hidden; }
+  @media (hover: hover) and (min-width: 64rem) {
+    .reveal-desc { grid-template-rows: 0fr; opacity: 0; transform: translateY(8px); }
+    .group:hover .reveal-desc,
+    .group:focus-visible .reveal-desc { grid-template-rows: 1fr; opacity: 1; transform: none; }
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* Sayfa açılışı: JS beklemeden CSS ile çalışır, içerik hiç gizli kalmaz */
+@keyframes rise-in {
+  from { transform: translateY(18px); opacity: 0.001; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes arch-in {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.rise-in { animation: rise-in 900ms var(--ease-soft) both; }
+.rise-in-1 { animation-delay: 80ms; }
+.rise-in-2 { animation-delay: 180ms; }
+.rise-in-3 { animation-delay: 280ms; }
+.rise-in-4 { animation-delay: 380ms; }
+.arch-in { animation: arch-in 1100ms var(--ease-soft) both; animation-delay: 120ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise-in, .arch-in { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
